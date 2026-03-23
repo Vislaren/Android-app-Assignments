@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Exports directory: app-specific external storage -->
+    <external-files-path
+        name="grademaster_exports"
+        path="GradeMaster/" />
+
+    <!-- Fallback: internal cache for temp files -->
+    <cache-path
+        name="grademaster_cache"
+        path="." />
+</paths>
