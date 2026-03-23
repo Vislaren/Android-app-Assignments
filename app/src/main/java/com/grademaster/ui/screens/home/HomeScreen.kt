@@ -32,6 +32,7 @@ import com.grademaster.ui.theme.GradeMasterColors
 import com.grademaster.ui.theme.gradeColor
 import com.grademaster.util.ExportEngine
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.WindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,12 +71,15 @@ fun HomeScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = MaterialTheme.colorScheme.background, // Added missing comma here
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)         // This tells Scaffold not to reserve space at the top
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                // CHANGE: Only apply bottom padding from Scaffold. 
+                // If we apply the whole 'paddingValues', the white gap returns.
+                .padding(bottom = paddingValues.calculateBottomPadding()),
             contentPadding = PaddingValues(bottom = 100.dp),
             verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {

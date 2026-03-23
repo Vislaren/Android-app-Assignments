@@ -30,11 +30,21 @@ class MainActivity : ComponentActivity() {
             val isDarkTheme by appPreferences.isDarkTheme
                 .collectAsStateWithLifecycle(initialValue = false)
 
-            GradeMasterTheme(darkTheme = isDarkTheme) {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    GradeMasterNavHost(exportEngine = exportEngine)
-                }
-            }
+            // Inside MainActivity.kt -> GradeMasterTheme { ... }
+GradeMasterTheme(darkTheme = isDarkTheme) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            // false = White icons (for dark backgrounds)
+            // true = Dark icons (for light backgrounds)
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
+        }
+    }
+    Surface(modifier = Modifier.fillMaxSize()) {
+        GradeMasterNavHost(exportEngine = exportEngine)
+    }
+}
         }
     }
 }
